@@ -1,0 +1,24 @@
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.submitButton {
+  width: 100%;
+}
+
+.textToLogin {
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  color: #9ea3ae;
+}
+
+.linkToLogin {
+  text-decoration: underline;
+  font-weight: 600;
+  color: #2bcbf1;
+  cursor: pointer;
+}
