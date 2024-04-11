@@ -1,0 +1,17 @@
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 16px;
+
+  .checkbox {
+    display: flex;
+  }
+
+  .label {
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+    color: white;
+  }
+}
