@@ -14,6 +14,10 @@
     color: white;
     transition: 300ms;
 
+    &.error {
+      border: 1px solid #d32f2f;
+    }
+
     &:focus {
       border-color: #622efe;
     }
@@ -56,4 +60,11 @@
       }
     }
   }
+}
+
+.errorMsg {
+  color: #d32f2f;
+  font-size: 14px;
+  margin-top: 4px;
+  margin-left: 4px;
 }
