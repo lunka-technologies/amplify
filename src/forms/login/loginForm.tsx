@@ -1,21 +1,39 @@
 import { Button } from '../../components/button/button';
 import { Checkbox } from '../../components/checkbox/checkbox';
 import { Input } from '../../components/input/input';
-import { ROUTE_REGISTER } from '../../router/routes';
+import { ROUTE_DASHBOARD, ROUTE_REGISTER } from '../../router/routes';
 import { LoginSchema, loginSchema } from '../../schemas/loginSchema';
 import styles from './loginForm.module.scss';
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const LoginForm = () => {
+  const mockEmail = 'test_email@gmail.com';
+  const mockPassword = 'testpassword';
+
+  const navigate = useNavigate();
+
   const formik = useFormik<LoginSchema>({
     initialValues: {
       email: '',
       password: '',
     },
     validationSchema: loginSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: (values, { setErrors, setSubmitting }) => {
+      if (mockEmail && values.email) {
+        setErrors({ email: 'Email is incorrect' });
+        setSubmitting(false);
+      }
+
+      if (mockPassword && values.password) {
+        setErrors({
+          password: 'Email address or password is incorrect',
+        });
+        setSubmitting(false);
+      }
+
+      console.log('Submitted values:', values);
+      navigate(ROUTE_DASHBOARD);
     },
   });
 
