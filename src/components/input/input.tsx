@@ -26,8 +26,7 @@ export const Input = ({
   onBlur = () => null,
 }: IInputProps) => {
   const [isShowPassword, setShowPassword] = useState(false);
-
-  // TODO: Move type === "password" to const
+  const isTypePassword = type === 'password';
 
   return (
     <div className={styles.inputContainer}>
@@ -39,9 +38,10 @@ export const Input = ({
       <input
         type={isShowPassword ? 'text' : type}
         id={id}
+        autoComplete="off"
         className={classNames([
           styles.input,
-          type === 'password' && styles.passwordType,
+          isTypePassword && styles.passwordType,
           error && styles.error,
         ])}
         placeholder={placeholder}
@@ -50,7 +50,7 @@ export const Input = ({
         value={value}
       />
       {error && <div className={styles.errorMsg}>{error}</div>}
-      {type === 'password' && (
+      {isTypePassword && (
         <div
           onClick={() => setShowPassword(!isShowPassword)}
           className={styles.eye}
