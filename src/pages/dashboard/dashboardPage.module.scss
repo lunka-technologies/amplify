@@ -2,13 +2,29 @@
   position: relative;
 }
 
-.tableContainer {
+.boxContainer {
   margin-top: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  .table {
+  .table,
+  .chart {
     background-color: #0c0b14;
+  }
+
+  .chart {
+    padding: 17px 34px;
+
+    .lineChart {
+      margin-left: -45px;
+    }
+  }
+
+  .chartTitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #84818a;
+    margin-bottom: 18px;
   }
 }
