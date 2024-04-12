@@ -10,7 +10,7 @@ export const Header = () => {
     <header className={styles.header}>
       <div className={styles.container}>
         <LogoSVG className={styles.logo} />
-        <div className={styles.divider}></div>
+        <div className={styles.divider} />
       </div>
 
       <div className={styles.container}>
@@ -19,7 +19,7 @@ export const Header = () => {
           <span className={styles.amount}>{amount}</span>
           <Chip>USDT</Chip>
         </p>
-        <div className={styles.divider}></div>
+        <div className={styles.divider} />
         <Button color="mint" className={styles.buttonKey}>
           0x1BvBMSEYstWet...
         </Button>

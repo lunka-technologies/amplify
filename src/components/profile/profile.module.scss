@@ -1,0 +1,33 @@
+.profileContainer {
+  padding: 12px;
+}
+
+.dataContainer {
+  display: flex;
+  align-items: center;
+  padding: 12px 8px;
+  border-radius: 4px;
+  background-color: #26233e;
+}
+
+.avatar {
+  border-radius: 50%;
+  display: block;
+  background-color: #fafbfc;
+}
+
+.container {
+  margin-left: 4px;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+}
+
+.email {
+  font-weight: 400;
+  font-size: 12px;
+  color: #808191;
+}
