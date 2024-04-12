@@ -1,0 +1,17 @@
+.chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  font-weight: 600;
+  font-size: 12px;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+
+  &.color_ {
+    &violet {
+      background-color: #8247e5;
+    }
+  }
+}
