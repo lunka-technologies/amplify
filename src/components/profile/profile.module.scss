@@ -1,5 +1,12 @@
 .profileContainer {
-  padding: 12px;
+  padding: 16px 12px;
+  position: absolute;
+  top: 98px;
+  right: 8px;
+}
+
+.item {
+  cursor: pointer;
 }
 
 .dataContainer {

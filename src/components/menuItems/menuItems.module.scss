@@ -1,8 +1,13 @@
 .list {
+  width: 192px;
   margin-top: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.item {
+  cursor: pointer;
 }
 
 .container {

@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 
 interface IButtonProps {
   onClick?: () => void;
-  color: 'mint';
+  color: string;
   children: ReactNode;
   className?: string;
   type?: 'button' | 'submit' | 'reset' | undefined;

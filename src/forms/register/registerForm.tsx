@@ -1,12 +1,13 @@
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
-import { ROUTE_MAIN } from '../../router/routes';
+import { ROUTE_DASHBOARD, ROUTE_MAIN } from '../../router/routes';
 import { RegisterSchema, registerSchema } from '../../schemas/registerSchema';
 import styles from './registerForm.module.scss';
 import { useFormik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const RegisterForm = () => {
+  const navigate = useNavigate();
   const formik = useFormik<RegisterSchema>({
     initialValues: {
       name: '',
@@ -17,7 +18,8 @@ export const RegisterForm = () => {
     },
     validationSchema: registerSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      console.log('Submitted values:', values);
+      navigate(ROUTE_DASHBOARD);
     },
   });
 

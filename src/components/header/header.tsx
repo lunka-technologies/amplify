@@ -4,8 +4,13 @@ import { Button } from '../button/button';
 import { Chip } from '../chip/chip';
 import styles from './header.module.scss';
 
-export const Header = () => {
+interface IHeaderProps {
+  handleClickMenu: () => void;
+}
+
+export const Header = ({ handleClickMenu }: IHeaderProps) => {
   const amount = 746.02;
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -23,7 +28,7 @@ export const Header = () => {
         <Button color="mint" className={styles.buttonKey}>
           0x1BvBMSEYstWet...
         </Button>
-        <MenuSVG className={styles.menu} />
+        <MenuSVG className={styles.menu} onClick={handleClickMenu} />
       </div>
     </header>
   );

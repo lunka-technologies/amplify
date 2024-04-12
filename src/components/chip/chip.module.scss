@@ -6,12 +6,18 @@
   font-weight: 600;
   font-size: 12px;
   color: white;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
 
   &.color_ {
     &violet {
       background-color: #8247e5;
+    }
+    &mint {
+      background-color: #2bcbf1;
+    }
+    &red {
+      background-color: #fd0200;
     }
   }
 }

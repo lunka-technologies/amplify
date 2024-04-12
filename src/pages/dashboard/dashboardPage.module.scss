@@ -1,0 +1,14 @@
+.container {
+  position: relative;
+}
+
+.tableContainer {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .table {
+    background-color: #0c0b14;
+  }
+}

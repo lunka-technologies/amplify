@@ -21,5 +21,10 @@
     &mint {
       background-color: #2bcbf1;
     }
+    &disabled {
+      color: #37363e;
+      background-color: transparent;
+      border: 1px solid #e4e4e433;
+    }
   }
 }
