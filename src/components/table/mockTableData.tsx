@@ -13,7 +13,7 @@ export const mockTableData = [
     assets: <AssetsSVG />,
     apy: '32.4%',
     stake: '$120.5',
-    action: { text: 'Stake / Withdraw', color: 'mint' },
+    action: { isActive: true, text: ['Stake', 'Withdraw'], color: 'mint' },
   },
   {
     id: 2,
@@ -23,6 +23,6 @@ export const mockTableData = [
     assets: <Assets2SVG />,
     apy: '25%+',
     stake: '-',
-    action: { text: 'Coming Soon', color: 'disabled' },
+    action: { isActive: false, text: ['Coming Soon'], color: 'disabled' },
   },
 ];

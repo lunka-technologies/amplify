@@ -8,5 +8,5 @@ export interface ITableTypes {
   assets: ReactNode;
   apy: string;
   stake: string;
-  action: { text: string; color: string };
+  action: { isActive: boolean; text: string[]; color: string };
 }

@@ -52,4 +52,15 @@
   height: 32px;
   width: 190px;
   padding: 12px 24px;
+
+  &Active {
+    height: 32px;
+    width: 120px;
+    padding: 12px 24px;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
 }

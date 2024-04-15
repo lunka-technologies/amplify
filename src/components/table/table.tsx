@@ -64,9 +64,19 @@ const tableColumns: ITableColumn[] = [
     id: 'action',
     label: 'Action',
     cell: (item: ITableTypes) => (
-      <Button color={item.action.color} className={styles.button}>
-        {item.action.text}
-      </Button>
+      <>
+        {item.action.text.map((text, index) => (
+          <Button
+            key={index}
+            color={item.action.color}
+            className={
+              item.action.isActive ? styles.buttonActive : styles.button
+            }
+          >
+            {text}
+          </Button>
+        ))}
+      </>
     ),
   },
 ];
@@ -80,9 +90,15 @@ const TableBody = () => {
     <tbody className={styles.tbody}>
       {mockTableData.map((item) => (
         <tr key={item.id}>
-          {tableColumns.map((column) => (
-            <td key={column.id}>{column.cell ? column.cell(item) : null}</td>
-          ))}
+          {tableColumns.map((column) =>
+            column.id === 'action' ? (
+              <td key={column.id} className={styles.actions}>
+                {column.cell ? column.cell(item) : null}
+              </td>
+            ) : (
+              <td key={column.id}>{column.cell ? column.cell(item) : null}</td>
+            )
+          )}
         </tr>
       ))}
     </tbody>
