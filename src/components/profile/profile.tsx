@@ -3,11 +3,7 @@ import { MenuItems } from '../menuItems/menuItems';
 import styles from './profile.module.scss';
 import { useState } from 'react';
 
-interface IProfileProps {
-  isProfileOpen: boolean;
-}
-
-export const Profile = ({ isProfileOpen }: IProfileProps) => {
+export const Profile = () => {
   const [userData] = useState({
     username: 'Jeff_0x',
     email: 'jeff.cafolla@gmail.com',
@@ -15,21 +11,15 @@ export const Profile = ({ isProfileOpen }: IProfileProps) => {
   });
 
   return (
-    isProfileOpen && (
-      <Card className={styles.profileContainer}>
-        <div className={styles.dataContainer}>
-          <img
-            src={userData.avatarSrc}
-            alt="avatar"
-            className={styles.avatar}
-          />
-          <div className={styles.container}>
-            <p className={styles.username}>{userData.username}</p>
-            <p className={styles.email}>{userData.email}</p>
-          </div>
+    <Card className={styles.profileContainer}>
+      <div className={styles.dataContainer}>
+        <img src={userData.avatarSrc} alt="avatar" className={styles.avatar} />
+        <div className={styles.container}>
+          <p className={styles.username}>{userData.username}</p>
+          <p className={styles.email}>{userData.email}</p>
         </div>
-        <MenuItems />
-      </Card>
-    )
+      </div>
+      <MenuItems />
+    </Card>
   );
 };
