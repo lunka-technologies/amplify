@@ -2,11 +2,13 @@ import EyeClosedSVG from '../../assets/eye-closed.svg?react';
 import EyeOpenSVG from '../../assets/eye-open.svg?react';
 import styles from './input.module.scss';
 import classNames from 'classnames';
-import { SyntheticEvent, useState } from 'react';
+import { LegacyRef, SyntheticEvent, useState } from 'react';
 import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 interface IInputProps {
+  maxValue?: string;
+  onRef?: LegacyRef<MaskedInput> | undefined;
   label?: string;
   id: string;
   placeholder?: string;
@@ -19,11 +21,13 @@ interface IInputProps {
 }
 
 export const Input = ({
+  maxValue = ' ',
   placeholder,
   label,
   className,
   value,
   id,
+  onRef,
   type = 'text',
   error,
   onChange = () => null,
@@ -54,8 +58,18 @@ export const Input = ({
       )}
       {type === 'amount' ? (
         <MaskedInput
+          ref={onRef}
           placeholder={placeholder}
           onBlur={onBlur}
+          pipe={(value) => {
+            let cleanValue = value.replace(/\,/g, '');
+            let numericValue = parseFloat(cleanValue);
+            if (numericValue > parseFloat(maxValue)) {
+              return `${maxValue}`;
+            } else {
+              return value;
+            }
+          }}
           onChange={onChange}
           value={value}
           className={classNames([

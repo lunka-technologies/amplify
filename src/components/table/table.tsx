@@ -1,8 +1,11 @@
 import { getCoinSVG } from '../../helpers/coinIcon';
+import { StakeModal } from '../../modals/stakeModal/stakeModal';
+import { WithdrawModal } from '../../modals/withdrawModal/withdrawModal';
 import { Button } from '../button/button';
 import { Chip } from '../chip/chip';
 import { mockData } from './mockTableData';
 import styles from './table.module.scss';
+import { useState } from 'react';
 
 const tableHead = [
   'Strategy',
@@ -19,6 +22,17 @@ const TableHead = () => {
 };
 
 export const Table = () => {
+  const [isStakeModal, setStakeModal] = useState(false);
+  const [isWithdrawModal, setWithdrawModal] = useState(false);
+
+  const handleStakeModalToggle = () => {
+    setStakeModal(!isStakeModal);
+  };
+
+  const handleWithdrawModalToggle = () => {
+    setWithdrawModal(!isWithdrawModal);
+  };
+
   const renderBody = mockData.map((item) => (
     <tr key={item.id}>
       <td>
@@ -57,10 +71,18 @@ export const Table = () => {
         </td>
       ) : (
         <td className={styles.actions}>
-          <Button color="mint" className={styles.button}>
+          <Button
+            color="mint"
+            className={styles.button}
+            onClick={handleStakeModalToggle}
+          >
             Stake
           </Button>
-          <Button color="mint" className={styles.button}>
+          <Button
+            color="mint"
+            className={styles.button}
+            onClick={handleWithdrawModalToggle}
+          >
             Withdraw
           </Button>
         </td>
@@ -78,6 +100,15 @@ export const Table = () => {
         </thead>
         <tbody className={styles.tbody}>{renderBody}</tbody>
       </table>
+      {isStakeModal && (
+        <StakeModal isStakeModal={isStakeModal} setStakeModal={setStakeModal} />
+      )}
+      {isWithdrawModal && (
+        <WithdrawModal
+          isWithdrawModal={isWithdrawModal}
+          setWithdrawModal={setWithdrawModal}
+        />
+      )}
     </div>
   );
 };
