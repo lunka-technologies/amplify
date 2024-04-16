@@ -1,18 +1,25 @@
 .list {
   width: 192px;
-  margin-top: 16px;
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 .item {
-  cursor: pointer;
-}
-
-.container {
   display: flex;
   align-items: center;
+  cursor: pointer;
+  padding: 12px 0;
+  border-bottom: 1px solid #35333d;
+  transition: 300ms;
+
+  &:hover {
+    background-color: #26233e;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .label {

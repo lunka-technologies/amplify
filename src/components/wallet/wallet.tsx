@@ -69,8 +69,8 @@ export const Wallet = ({ isWalletOpen, setWalletOpen }: IWalletProps) => {
           id="wallet"
           placeholder="Add your Withdraw Wallet"
           value={withdrawData}
-          onChange={(e: SyntheticEvent<HTMLInputElement, Event>) =>
-            setWithdrawData(e.target.value)
+          onChange={(e: SyntheticEvent<HTMLInputElement>) =>
+            setWithdrawData(e.currentTarget.value)
           }
         />
       </div>

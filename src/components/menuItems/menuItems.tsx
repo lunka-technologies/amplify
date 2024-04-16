@@ -5,43 +5,28 @@ import { ChangePasswordForm } from '../../forms/changePassword/changePasswordFor
 import styles from './menuItems.module.scss';
 import { useState } from 'react';
 
-const menuItems = [
-  {
-    icon: <SettingSVG />,
-    label: 'Change Password',
-  },
-  { icon: <HelpSVG />, label: 'Help' },
-  { icon: <LogoutSVG />, label: 'Logout' },
-];
-
 export const MenuItems = () => {
-  const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
-
-  const handleClick = (label: string) => {
-    setSelectedMenuItem((prevSelected) =>
-      prevSelected === label ? null : label
-    );
-  };
+  const [isShowChangePassword, setShowChangePassword] = useState(false);
 
   return (
     <ul className={styles.list}>
-      {menuItems.map(({ icon, label }, index) => (
-        <li key={label} className={styles.item}>
-          {selectedMenuItem === 'Change Password' &&
-          label === 'Change Password' ? (
-            <ChangePasswordForm onCloseForm={() => setSelectedMenuItem(null)} />
-          ) : (
-            <div
-              className={styles.container}
-              onClick={() => handleClick(label)}
-            >
-              {icon}
-              <span className={styles.label}>{label}</span>
-            </div>
-          )}
-          {index < menuItems.length - 1 && <div className={styles.divider} />}
+      {isShowChangePassword ? (
+        <ChangePasswordForm onCloseForm={() => setShowChangePassword(false)} />
+      ) : (
+        <li className={styles.item} onClick={() => setShowChangePassword(true)}>
+          <SettingSVG />
+          <span className={styles.label}>Change Password</span>
         </li>
-      ))}
+      )}
+
+      <li className={styles.item} onClick={() => {}}>
+        <HelpSVG />
+        <span className={styles.label}>Help</span>
+      </li>
+      <li className={styles.item} onClick={() => {}}>
+        <LogoutSVG />
+        <span className={styles.label}>Logout</span>
+      </li>
     </ul>
   );
 };

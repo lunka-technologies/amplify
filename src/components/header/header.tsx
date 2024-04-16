@@ -18,14 +18,21 @@ export const Header = () => {
   const amount = 746.02;
 
   useEffect(() => {
-    document.addEventListener('click', checkIfClickedOutside);
-
-    return () => {
-      document.removeEventListener('click', checkIfClickedOutside);
-    };
+    // document.addEventListener('click', checkIfClickedOutside, false);
+    // return () => {
+    //   document.removeEventListener('click', checkIfClickedOutside, false);
+    // };
   }, []);
 
   const checkIfClickedOutside = (e: MouseEvent) => {
+    if (!profileRef.current) return;
+
+    console.log(
+      profileRef.current,
+      profileRef.current.contains(e.target as Node),
+      e.target
+    );
+
     if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
       setShowProfile(false);
     }
@@ -72,7 +79,7 @@ export const Header = () => {
             )}
           </div>
 
-          <div className={styles.menu} ref={profileRef}>
+          <div ref={profileRef}>
             <MenuSVG
               className={styles.menu}
               onClick={() => setShowProfile(!isShowProfile)}

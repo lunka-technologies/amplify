@@ -11,6 +11,7 @@
   .table,
   .chart {
     background-color: #0c0b14;
+    border-radius: 8px;
   }
 
   .chart {
@@ -27,4 +28,11 @@
     color: #84818a;
     margin-bottom: 18px;
   }
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 23px 59px;
 }

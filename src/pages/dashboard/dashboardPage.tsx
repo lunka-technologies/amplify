@@ -1,6 +1,7 @@
 import { LineChart } from '../../components/charts/lineChart/lineChart';
 import { Header } from '../../components/header/header';
 import { Modal } from '../../components/modal/modal';
+import { Switch } from '../../components/switch/switch';
 import { Table } from '../../components/table/table';
 import styles from './dashboardPage.module.scss';
 import { useState } from 'react';
@@ -34,6 +35,10 @@ export const DashboardPage = () => {
 
       <div className={styles.boxContainer}>
         <div className={styles.table}>
+          <div className={styles.filters}>
+            <Switch label="Staked only" />
+            <div></div>
+          </div>
           <Table />
         </div>
       </div>
