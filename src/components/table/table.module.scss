@@ -30,6 +30,18 @@
 
     td {
       padding: 24px 30px;
+
+      .tableFlex {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      &.tableCoins {
+        svg {
+          margin-left: -10px;
+        }
+      }
     }
   }
 }
@@ -50,14 +62,7 @@
 
 .button {
   height: 32px;
-  width: 190px;
   padding: 12px 24px;
-
-  &Active {
-    height: 32px;
-    width: 120px;
-    padding: 12px 24px;
-  }
 }
 
 .actions {

@@ -1,111 +1,73 @@
-import { ITableTypes } from '../../types/table';
+import { getCoinSVG } from '../../helpers/coinIcon';
 import { Button } from '../button/button';
 import { Chip } from '../chip/chip';
-import { mockTableData } from './mockTableData';
+import { mockData } from './mockTableData';
 import styles from './table.module.scss';
-import { ReactNode } from 'react';
 
-interface ITableColumn {
-  id: string;
-  label: string;
-  cell?: (item: ITableTypes) => ReactNode;
-}
-
-const tableColumns: ITableColumn[] = [
-  {
-    id: 'strategy',
-    label: 'Strategy',
-    cell: (item: ITableTypes) => (
-      <Chip color={item.strategy.color} className={styles.chip}>
-        {item.strategy.text}
-      </Chip>
-    ),
-  },
-  {
-    id: 'protocol',
-    label: 'Protocol',
-    cell: (item: ITableTypes) => (
-      <span className={styles.span}>
-        {item.protocol.logo}
-        {item.protocol.label}
-      </span>
-    ),
-  },
-  {
-    id: 'chain',
-    label: 'Chain',
-    cell: (item: ITableTypes) => (
-      <span className={styles.span}>
-        {item.chain.logo}
-        {item.chain.label}
-      </span>
-    ),
-  },
-  {
-    id: 'assets',
-    label: 'Assets',
-    cell: (item: ITableTypes) => item.assets,
-  },
-  {
-    id: 'apy',
-    label: 'APY',
-    cell: (item: ITableTypes) => (
-      <span className={styles.span}>{item.apy}</span>
-    ),
-  },
-  {
-    id: 'stake',
-    label: 'My Stake',
-    cell: (item: ITableTypes) => (
-      <span className={styles.span}>{item.stake}</span>
-    ),
-  },
-  {
-    id: 'action',
-    label: 'Action',
-    cell: (item: ITableTypes) => (
-      <>
-        {item.action.text.map((text, index) => (
-          <Button
-            key={index}
-            color={item.action.color}
-            className={
-              item.action.isActive ? styles.buttonActive : styles.button
-            }
-          >
-            {text}
-          </Button>
-        ))}
-      </>
-    ),
-  },
+const tableHead = [
+  'Strategy',
+  'Protocol',
+  'Chain',
+  'Assets',
+  'APY',
+  'My Stake',
+  'Action',
 ];
 
 const TableHead = () => {
-  return tableColumns.map(({ id, label }) => <th key={id}>{label}</th>);
-};
-
-const TableBody = () => {
-  return (
-    <tbody className={styles.tbody}>
-      {mockTableData.map((item) => (
-        <tr key={item.id}>
-          {tableColumns.map((column) =>
-            column.id === 'action' ? (
-              <td key={column.id} className={styles.actions}>
-                {column.cell ? column.cell(item) : null}
-              </td>
-            ) : (
-              <td key={column.id}>{column.cell ? column.cell(item) : null}</td>
-            )
-          )}
-        </tr>
-      ))}
-    </tbody>
-  );
+  return tableHead.map((item) => <th key={item}>{item}</th>);
 };
 
 export const Table = () => {
+  const renderBody = mockData.map((item) => (
+    <tr key={item.id}>
+      <td>
+        <Chip color={item.strategy === 'hyper' ? 'red' : 'violet'}>
+          {item.strategy}
+        </Chip>
+      </td>
+      <td>
+        <div className={styles.tableFlex}>
+          {getCoinSVG(item.protocol)}
+          <span className={styles.span}>{item.protocol}</span>
+        </div>
+      </td>
+      <td>
+        <div className={styles.tableFlex}>
+          {getCoinSVG(item.chain)}
+          <span className={styles.span}>{item.chain}</span>
+        </div>
+      </td>
+      <td className={styles.tableCoins}>
+        {item.assets.map((asset) => getCoinSVG(asset))}
+      </td>
+      <td>
+        <span className={styles.span}>{item.apy}%</span>
+      </td>
+      <td>
+        <span className={styles.span}>
+          {item.isCommingSoon ? `-` : `$${item.stake}`}{' '}
+        </span>
+      </td>
+      {item.isCommingSoon ? (
+        <td>
+          <Button color="disabled" className={styles.button}>
+            Commong Soon
+          </Button>
+        </td>
+      ) : (
+        <td className={styles.actions}>
+          <Button color="mint" className={styles.button}>
+            Stake
+          </Button>
+          <Button color="mint" className={styles.button}>
+            Withdraw
+          </Button>
+        </td>
+      )}
+    </tr>
+  ));
+
   return (
     <div className={styles.container}>
       <table>
@@ -114,7 +76,7 @@ export const Table = () => {
             <TableHead />
           </tr>
         </thead>
-        <TableBody />
+        <tbody className={styles.tbody}>{renderBody}</tbody>
       </table>
     </div>
   );

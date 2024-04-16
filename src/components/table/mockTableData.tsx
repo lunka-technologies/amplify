@@ -1,28 +1,34 @@
-import AssetsSVG from '../../assets/tableIcon/assets-1.svg?react';
-import Assets2SVG from '../../assets/tableIcon/assets-2.svg?react';
-import ChainSVG from '../../assets/tableIcon/chain-logo-1.svg?react';
-import CoinsSVG from '../../assets/tableIcon/coins.svg?react';
-import ProtocolSVG from '../../assets/tableIcon/protocol-logo-1.svg?react';
+import { Coins } from '../../types/coins';
 
-export const mockTableData = [
+export type MockData = {
+  id: number;
+  strategy: 'growth' | 'hyper';
+  protocol: Coins;
+  chain: Coins;
+  assets: Coins[];
+  apy: number;
+  stake: number;
+  isCommingSoon?: boolean;
+};
+
+export const mockData: MockData[] = [
   {
     id: 1,
-    strategy: { text: 'Growth', color: 'mint' },
-    protocol: { logo: <ProtocolSVG />, label: 'AAVE' },
-    chain: { logo: <ChainSVG />, label: 'Polygon (MATIC)' },
-    assets: <AssetsSVG />,
-    apy: '32.4%',
-    stake: '$120.5',
-    action: { isActive: true, text: ['Stake', 'Withdraw'], color: 'mint' },
+    strategy: 'growth',
+    protocol: Coins.DAI,
+    chain: Coins.E_ETH,
+    assets: [Coins.AAVE],
+    apy: 32.4,
+    stake: 120.5,
   },
   {
     id: 2,
-    strategy: { text: 'Hyper', color: 'red' },
-    protocol: { logo: <CoinsSVG />, label: 'ETH 2.0' },
-    chain: { logo: <CoinsSVG />, label: 'Ethereum' },
-    assets: <Assets2SVG />,
-    apy: '25%+',
-    stake: '-',
-    action: { isActive: false, text: ['Coming Soon'], color: 'disabled' },
+    strategy: 'hyper',
+    protocol: Coins.AAVE,
+    chain: Coins.E_ETH,
+    assets: [Coins.AAVE, Coins.DAI, Coins.ARBITRUM, Coins.ENTHERUM],
+    apy: 25,
+    stake: 120.5,
+    isCommingSoon: true,
   },
 ];

@@ -1,0 +1,25 @@
+<svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M11.9238 0C17.998 0 22.9238 4.9258 22.9238 11C22.9238 17.0742 17.998 22 11.9238 22C5.84963 22 0.923828 17.0742 0.923828 11C0.923828 4.9258 5.84963 0 11.9238 0Z" fill="white"/>
+<g clip-path="url(#clip0_47_2156)">
+<path d="M7.74659 13.3708C7.82127 13.2914 7.92395 13.2451 8.03286 13.2451H17.9092C18.0897 13.2451 18.1799 13.4767 18.0523 13.6124L16.1013 15.6868C16.0267 15.7662 15.924 15.8125 15.8151 15.8125H5.93872C5.75825 15.8125 5.66801 15.5809 5.79559 15.4453L7.74659 13.3708Z" fill="url(#paint0_linear_47_2156)"/>
+<path d="M7.74561 5.62572C7.8234 5.54632 7.92609 5.5 8.03188 5.5H17.9082C18.0887 5.5 18.1789 5.73159 18.0514 5.86724L16.1004 7.94165C16.0257 8.02105 15.923 8.06737 15.8141 8.06737H5.93775C5.75727 8.06737 5.66703 7.83578 5.79461 7.70013L7.74561 5.62572Z" fill="url(#paint1_linear_47_2156)"/>
+<path d="M16.1013 9.4735C16.0267 9.3941 15.924 9.34778 15.8151 9.34778H5.93872C5.75825 9.34778 5.66801 9.57937 5.79559 9.71502L7.74659 11.7894C7.82127 11.8688 7.92395 11.9151 8.03286 11.9151H17.9092C18.0897 11.9151 18.1799 11.6836 18.0523 11.5479L16.1013 9.4735Z" fill="url(#paint2_linear_47_2156)"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_47_2156" x1="16.9657" y1="4.26079" x2="9.44857" y2="17.8026" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FFA3"/>
+<stop offset="1" stop-color="#DC1FFF"/>
+</linearGradient>
+<linearGradient id="paint1_linear_47_2156" x1="13.976" y1="2.60173" x2="6.45886" y2="16.1435" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FFA3"/>
+<stop offset="1" stop-color="#DC1FFF"/>
+</linearGradient>
+<linearGradient id="paint2_linear_47_2156" x1="15.4619" y1="3.42602" x2="7.94469" y2="16.9678" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FFA3"/>
+<stop offset="1" stop-color="#DC1FFF"/>
+</linearGradient>
+<clipPath id="clip0_47_2156">
+<rect width="12.375" height="10.3125" fill="white" transform="translate(5.73633 5.5)"/>
+</clipPath>
+</defs>
+</svg>

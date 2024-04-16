@@ -4,7 +4,7 @@ import classNames from 'classnames';
 interface IChipProps {
   children: string;
   className?: string;
-  color?: string;
+  color?: 'violet' | 'red';
 }
 
 export const Chip = ({ children, color = 'violet', className }: IChipProps) => {
