@@ -1,0 +1,18 @@
+.dropdown {
+  width: 200px;
+  padding: 8px 20px;
+  border-radius: 16px;
+  background-color: #1e1c33;
+  color: #fff;
+  border: unset;
+  outline: 0;
+  appearance: none;
+  background-image: url('../../assets/arrow-down.svg');
+  background-repeat: no-repeat;
+  background-position: right 0.7rem top 50%;
+  background-size: 0.65rem auto;
+
+  option:checked {
+    background-color: #110f1c;
+  }
+}

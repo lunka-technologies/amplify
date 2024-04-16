@@ -1,4 +1,5 @@
 import { LineChart } from '../../components/charts/lineChart/lineChart';
+import { Dropdown } from '../../components/dropdown/dropdown';
 import { Header } from '../../components/header/header';
 import { Switch } from '../../components/switch/switch';
 import { Table } from '../../components/table/table';
@@ -22,7 +23,10 @@ export const DashboardPage = () => {
         <div className={styles.table}>
           <div className={styles.filters}>
             <Switch label="Staked only" />
-            <div></div>
+            <div>
+              <h3 className={styles.dropdownTitle}>Sort By</h3>
+              <Dropdown />
+            </div>
           </div>
           <Table />
         </div>
