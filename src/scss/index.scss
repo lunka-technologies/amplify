@@ -14,3 +14,15 @@ body {
 li {
   list-style: none;
 }
+
+.MuiChartsAxis-line {
+  stroke: rgba(216, 218, 229, 0.2) !important;
+}
+
+.MuiChartsAxis-tick {
+  stroke: rgba(216, 218, 229, 0.2) !important;
+}
+
+.MuiChartsGrid-line {
+  stroke: rgba(216, 218, 229, 0.2) !important;
+}
