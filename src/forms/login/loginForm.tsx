@@ -1,17 +1,36 @@
+import { apis } from '../../axios/apis';
+import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Checkbox } from '../../components/checkbox/checkbox';
 import { Input } from '../../components/input/input';
 import { ROUTE_DASHBOARD, ROUTE_REGISTER } from '../../router/routes';
 import { LoginSchema, loginSchema } from '../../schemas/loginSchema';
 import styles from './loginForm.module.scss';
+import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const LoginForm = () => {
-  const mockEmail = 'test_email@gmail.com';
-  const mockPassword = 'testpassword';
-
   const navigate = useNavigate();
+
+  const onSubmit = async (values: LoginSchema) => {
+    try {
+      const {
+        data: { devOnlyToken },
+      } = await axiosInstance.post(apis.login, {
+        email: values.email,
+        password: values.password,
+      });
+
+      localStorage.setItem('jwt-token', devOnlyToken);
+
+      navigate(ROUTE_DASHBOARD);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error);
+      }
+    }
+  };
 
   const formik = useFormik<LoginSchema>({
     initialValues: {
@@ -19,22 +38,7 @@ export const LoginForm = () => {
       password: '',
     },
     validationSchema: loginSchema,
-    onSubmit: (values, { setErrors, setSubmitting }) => {
-      if (mockEmail && values.email) {
-        setErrors({ email: 'Email is incorrect' });
-        setSubmitting(false);
-      }
-
-      if (mockPassword && values.password) {
-        setErrors({
-          password: 'Email address or password is incorrect',
-        });
-        setSubmitting(false);
-      }
-
-      console.log('Submitted values:', values);
-      navigate(ROUTE_DASHBOARD);
-    },
+    onSubmit,
   });
 
   return (
