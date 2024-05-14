@@ -1,23 +1,41 @@
 import CloseSVG from '../../assets/close-icon.svg?react';
+import { apis } from '../../axios/apis';
+import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
 import { Modal } from '../../components/modal/modal';
 import styles from './stakeModal.module.scss';
-import { Dispatch, SetStateAction, useRef } from 'react';
+import { AxiosError } from 'axios';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import MaskedInput from 'react-text-mask';
 
 interface IStakeModalProps {
   isStakeModal: boolean;
   setStakeModal: Dispatch<SetStateAction<boolean>>;
+  balance: string;
 }
 
 export const StakeModal = ({
+  balance,
   isStakeModal,
   setStakeModal,
 }: IStakeModalProps) => {
   const inputRef = useRef<MaskedInput>(null);
+  const [inputValue, setInputValue] = useState('0.0');
 
-  const maxAmount = '100.00';
+  const fetchStake = async () => {
+    try {
+      await axiosInstance.post(apis.stake, {
+        amount: Number(inputValue),
+      });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error);
+      }
+    }
+  };
+
+  const maxAmount = balance;
   const persentage = 10;
 
   const handleCloseModal = () => {
@@ -52,6 +70,7 @@ export const StakeModal = ({
           <div className={styles.inputContainer}>
             <Input
               maxValue={maxAmount}
+              onChange={(e) => setInputValue(e.currentTarget.value)}
               onRef={inputRef}
               className={styles.input}
               id="amount"
@@ -70,7 +89,9 @@ export const StakeModal = ({
           <Button color="dark" onClick={handleCloseModal}>
             Go Back
           </Button>
-          <Button color="mint">Stake</Button>
+          <Button color="mint" onClick={fetchStake}>
+            Stake
+          </Button>
         </div>
       </div>
     </Modal>
