@@ -54,6 +54,12 @@
   border-radius: 16px;
 }
 
+.key {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .menu {
   margin-left: 12px;
   cursor: pointer;

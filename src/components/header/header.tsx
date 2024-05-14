@@ -8,14 +8,17 @@ import { Wallet } from '../wallet/wallet';
 import styles from './header.module.scss';
 import { useEffect, useRef, useState } from 'react';
 
-export const Header = () => {
+interface IHeaderProps {
+  amount: number;
+  wallet: string;
+}
+
+export const Header = ({ amount, wallet }: IHeaderProps) => {
   const [isShowProfile, setShowProfile] = useState(false);
   const [isWalletOpen, setWalletOpen] = useState(false);
 
   const profileRef = useRef<HTMLDivElement>(null);
   const walletRef = useRef<HTMLDivElement>(null);
-
-  const amount = 746.02;
 
   useEffect(() => {
     // document.addEventListener('click', checkIfClickedOutside, false);
@@ -24,23 +27,23 @@ export const Header = () => {
     // };
   }, []);
 
-  const checkIfClickedOutside = (e: MouseEvent) => {
-    if (!profileRef.current) return;
+  // const checkIfClickedOutside = (e: MouseEvent) => {
+  //   if (!profileRef.current) return;
 
-    console.log(
-      profileRef.current,
-      profileRef.current.contains(e.target as Node),
-      e.target
-    );
+  //   console.log(
+  //     profileRef.current,
+  //     profileRef.current.contains(e.target as Node),
+  //     e.target
+  //   );
 
-    if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
-      setShowProfile(false);
-    }
+  //   if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+  //     setShowProfile(false);
+  //   }
 
-    if (walletRef.current && !walletRef.current.contains(e.target as Node)) {
-      setWalletOpen(false);
-    }
-  };
+  //   if (walletRef.current && !walletRef.current.contains(e.target as Node)) {
+  //     setWalletOpen(false);
+  //   }
+  // };
 
   const handleClickWallet = () => {
     setWalletOpen(!isWalletOpen);
@@ -68,11 +71,13 @@ export const Header = () => {
               onClick={handleClickWallet}
             >
               <WalletSVG />
-              0x1BvBMSEYstWet...
+              <span className={styles.key}>{wallet}</span>
             </Button>
 
             {isWalletOpen && (
               <Wallet
+                amount={amount}
+                wallet={wallet}
                 isWalletOpen={isWalletOpen}
                 setWalletOpen={setWalletOpen}
               />
