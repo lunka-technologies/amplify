@@ -20,7 +20,11 @@ export const Switch = ({
   }, [isChecked]);
 
   return (
-    <div className={styles.switchContainer} onClick={onClick}>
+    <div
+      className={styles.switchContainer}
+      onClick={onClick}
+      onChange={onChange}
+    >
       <div
         className={classNames([styles.switch, isChecked && styles.checked])}
       />
