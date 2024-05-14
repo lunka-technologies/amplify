@@ -1,13 +1,46 @@
+import { apis } from '../../axios/apis';
+import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
 import { ROUTE_DASHBOARD, ROUTE_MAIN } from '../../router/routes';
 import { RegisterSchema, registerSchema } from '../../schemas/registerSchema';
 import styles from './registerForm.module.scss';
+import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const RegisterForm = () => {
   const navigate = useNavigate();
+
+  const onSubmit = async (values: RegisterSchema) => {
+    try {
+      await axiosInstance.post(apis.signup, {
+        email: values.email,
+        username: values.discordUsername,
+        password: values.password,
+      });
+
+      const {
+        data: { devOnlyToken },
+      } = await axiosInstance.post(apis.login, {
+        email: values.email,
+        password: values.password,
+      });
+
+      localStorage.setItem('jwt-token', devOnlyToken);
+
+      await axiosInstance.post(apis.createWallet, {});
+
+      await axiosInstance.post(apis.postFund, {});
+
+      navigate(ROUTE_DASHBOARD);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error);
+      }
+    }
+  };
+
   const formik = useFormik<RegisterSchema>({
     initialValues: {
       name: '',
@@ -17,10 +50,7 @@ export const RegisterForm = () => {
       confirmPassword: '',
     },
     validationSchema: registerSchema,
-    onSubmit: (values) => {
-      console.log('Submitted values:', values);
-      navigate(ROUTE_DASHBOARD);
-    },
+    onSubmit,
   });
 
   return (
