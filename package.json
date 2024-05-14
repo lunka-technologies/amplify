@@ -16,6 +16,7 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/x-charts": "^7.1.1",
     "@types/react-text-mask": "^5.4.14",
+    "axios": "^1.6.8",
     "classnames": "^2.5.1",
     "formik": "^2.4.5",
     "localforage": "^1.10.0",
