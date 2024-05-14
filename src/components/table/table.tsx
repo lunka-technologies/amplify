@@ -7,6 +7,10 @@ import { mockData } from './mockTableData';
 import styles from './table.module.scss';
 import { useState } from 'react';
 
+interface ITableProps {
+  amount: number;
+}
+
 const tableHead = [
   'Strategy',
   'Protocol',
@@ -21,9 +25,10 @@ const TableHead = () => {
   return tableHead.map((item) => <th key={item}>{item}</th>);
 };
 
-export const Table = () => {
+export const Table = ({ amount }: ITableProps) => {
   const [isStakeModal, setStakeModal] = useState(false);
   const [isWithdrawModal, setWithdrawModal] = useState(false);
+  const walletAmount = amount.toString();
 
   const handleStakeModalToggle = () => {
     setStakeModal(!isStakeModal);
@@ -101,12 +106,17 @@ export const Table = () => {
         <tbody className={styles.tbody}>{renderBody}</tbody>
       </table>
       {isStakeModal && (
-        <StakeModal isStakeModal={isStakeModal} setStakeModal={setStakeModal} />
+        <StakeModal
+          isStakeModal={isStakeModal}
+          setStakeModal={setStakeModal}
+          balance={walletAmount}
+        />
       )}
       {isWithdrawModal && (
         <WithdrawModal
           isWithdrawModal={isWithdrawModal}
           setWithdrawModal={setWithdrawModal}
+          balance={walletAmount}
         />
       )}
     </div>
