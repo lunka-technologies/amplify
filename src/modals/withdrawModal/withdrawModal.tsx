@@ -1,23 +1,42 @@
 import CloseSVG from '../../assets/close-icon.svg?react';
+import { apis } from '../../axios/apis';
+import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
 import { Modal } from '../../components/modal/modal';
 import styles from './withdrawModal.module.scss';
-import { Dispatch, SetStateAction, useRef } from 'react';
+import { AxiosError } from 'axios';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 import MaskedInput from 'react-text-mask';
 
 interface IWithdrawModalProps {
   isWithdrawModal: boolean;
   setWithdrawModal: Dispatch<SetStateAction<boolean>>;
+  balance: string;
 }
 
 export const WithdrawModal = ({
+  balance,
   isWithdrawModal,
   setWithdrawModal,
 }: IWithdrawModalProps) => {
   const inputRef = useRef<MaskedInput>(null);
-  const maxAmount = '1000.00';
+  const maxAmount = balance;
   const persentage = 0;
+
+  const [inputValue, setInputValue] = useState('0.0');
+
+  const fetchWithdraw = async () => {
+    try {
+      await axiosInstance.post(apis.halt, {
+        amount: Number(inputValue),
+      });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error);
+      }
+    }
+  };
 
   const handleCloseModal = () => {
     setWithdrawModal(!isWithdrawModal);
@@ -51,6 +70,7 @@ export const WithdrawModal = ({
           <div className={styles.inputContainer}>
             <Input
               onRef={inputRef}
+              onChange={(e) => setInputValue(e.currentTarget.value)}
               maxValue={maxAmount}
               className={styles.input}
               id="amount"
@@ -69,7 +89,9 @@ export const WithdrawModal = ({
           <Button color="dark" onClick={handleCloseModal}>
             Go Back
           </Button>
-          <Button color="mint">Withdraw</Button>
+          <Button color="mint" onClick={fetchWithdraw}>
+            Withdraw
+          </Button>
         </div>
       </div>
     </Modal>
