@@ -22,6 +22,12 @@ export const DashboardPage = () => {
       if (!address) {
         await axiosInstance.post(apis.createWallet, {});
         await axiosInstance.post(apis.postFund, {});
+        console.log();
+
+        const createWalletResponse = await axiosInstance.get(apis.getWallet);
+        const newAddress = createWalletResponse.data.address;
+
+        setWalletData(newAddress);
       } else {
         setWalletData(address);
       }
@@ -31,8 +37,7 @@ export const DashboardPage = () => {
       } = await axiosInstance.get(apis.getBalance, {});
 
       setAmount(USDTBalance);
-
-      await axiosInstance.get(apis.info, {});
+      // await axiosInstance.get(apis.info, {});
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);
