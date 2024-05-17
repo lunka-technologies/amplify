@@ -7,9 +7,11 @@ import { RegisterSchema, registerSchema } from '../../schemas/registerSchema';
 import styles from './registerForm.module.scss';
 import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const RegisterForm = () => {
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const onSubmit = async (values: RegisterSchema) => {
@@ -37,6 +39,7 @@ export const RegisterForm = () => {
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);
+        setError(error.response?.data.message as string);
       }
     }
   };
@@ -114,6 +117,7 @@ export const RegisterForm = () => {
           ) && formik.errors.confirmPassword
         }
       />
+      {error && <div className={styles.errorMsg}>{error}</div>}
       <Button type="submit" color="mint" className={styles.submitButton}>
         Sign up
       </Button>
