@@ -12,7 +12,7 @@ export enum Coins {
   UNISWAP = 'uniswap',
   BNB = 'BNB',
   SOLANA = 'solana',
-  ENTHERUM = 'entherum',
+  ETHEREUM = 'ethereum',
   DAI = 'DAI',
   BITCOIN = 'bitcoin',
   USDC = 'USDC',

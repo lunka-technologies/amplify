@@ -1,4 +1,6 @@
-import axios from 'axios';
+import { router } from '../router/router';
+import { ROUTE_MAIN } from '../router/routes';
+import axios, { AxiosError } from 'axios';
 
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -17,19 +19,19 @@ axiosInstance.interceptors.request.use((request) => {
   return request;
 });
 
-// axiosInstance.interceptors.response.use(
-//   function (response) {
-//     return response;
-//   },
-//   function (error) {
-//     if (error instanceof AxiosError) {
-//       // Unauthorized
-//       if (error.response?.status === 401) {
-//         router.navigate(routes.login);
-//       }
-//     }
-//     console.log(error);
+axiosInstance.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    if (error instanceof AxiosError) {
+      // Unauthorized
+      if (error.response?.status === 401) {
+        router.navigate(ROUTE_MAIN);
+      }
+    }
+    console.log(error);
 
-//     return Promise.reject(error);
-//   }
-// );
+    return Promise.reject(error);
+  }
+);

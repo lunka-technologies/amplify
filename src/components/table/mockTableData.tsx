@@ -24,9 +24,9 @@ export const mockData: MockData[] = [
   {
     id: 2,
     strategy: 'hyper',
-    protocol: Coins.ENTHERUM,
+    protocol: Coins.ETHEREUM,
     chain: Coins.DAI,
-    assets: [Coins.AAVE, Coins.DAI, Coins.ARBITRUM, Coins.ENTHERUM],
+    assets: [Coins.AAVE, Coins.DAI, Coins.ARBITRUM, Coins.ETHEREUM],
     apy: 25,
     stake: 120.5,
     isCommingSoon: true,

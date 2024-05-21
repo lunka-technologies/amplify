@@ -33,7 +33,9 @@ export const Wallet = ({
         address,
         amount,
       });
+
       await axiosInstance.get(apis.getBalance);
+      // window.location.reload();
       setIsSuccessful(true);
     } catch (error) {
       if (error instanceof AxiosError) {

@@ -20,6 +20,14 @@
   &.color_ {
     &mint {
       background-color: #2bcbf1;
+
+      &:disabled {
+        background-color: #3d3b46;
+
+        &:active {
+          opacity: 1;
+        }
+      }
     }
     &disabled {
       color: #37363e;

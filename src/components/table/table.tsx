@@ -71,7 +71,7 @@ export const Table = ({ amount }: ITableProps) => {
       {item.isCommingSoon ? (
         <td>
           <Button color="disabled" className={styles.button}>
-            Commong Soon
+            Coming Soon
           </Button>
         </td>
       ) : (
@@ -116,7 +116,6 @@ export const Table = ({ amount }: ITableProps) => {
         <WithdrawModal
           isWithdrawModal={isWithdrawModal}
           setWithdrawModal={setWithdrawModal}
-          balance={walletAmount}
         />
       )}
     </div>

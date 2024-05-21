@@ -4,7 +4,7 @@ import BNB from '../assets/coins/BNB.svg?react';
 import BSC from '../assets/coins/BSC.svg?react';
 import BITCOIN from '../assets/coins/Bitcoin.svg?react';
 import DAI from '../assets/coins/DAI.svg?react';
-import ENTHERUM from '../assets/coins/Ethereum.svg?react';
+import ETHEREUM from '../assets/coins/Ethereum.svg?react';
 import OPTIMISM from '../assets/coins/Optimism.svg?react';
 import PANCAKE from '../assets/coins/PancakeSwap.svg?react';
 import POLYGON from '../assets/coins/Polygon.svg?react';
@@ -38,8 +38,8 @@ export const getCoinSVG = (coin: Coins) => {
     case Coins.DAI:
       return <DAI />;
 
-    case Coins.ENTHERUM:
-      return <ENTHERUM />;
+    case Coins.ETHEREUM:
+      return <ETHEREUM />;
 
     case Coins.OPTIMISM:
       return <OPTIMISM />;

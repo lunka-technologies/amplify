@@ -46,7 +46,6 @@ export const RegisterForm = () => {
 
   const formik = useFormik<RegisterSchema>({
     initialValues: {
-      name: '',
       email: '',
       discordUsername: '',
       password: '',
@@ -58,17 +57,6 @@ export const RegisterForm = () => {
 
   return (
     <form onSubmit={formik.handleSubmit} className={styles.form}>
-      <Input
-        placeholder="John Doe"
-        label="Name"
-        id="name"
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={
-          Boolean(formik.touched.name && formik.errors.name) &&
-          formik.errors.name
-        }
-      />
       <Input
         placeholder="example@email.com"
         label="Email"

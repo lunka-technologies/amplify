@@ -24,6 +24,12 @@ export const StakeModal = ({
   const inputRef = useRef<MaskedInput>(null);
   const [inputValue, setInputValue] = useState('0.0');
   const [isSuccessful, setSuccessful] = useState(false);
+  const maxAmount = balance;
+  const persentage = 10;
+  const isDisabled =
+    parseFloat(inputValue) === 0 ||
+    inputValue === '' ||
+    parseFloat(maxAmount) === 0;
 
   const fetchStake = async () => {
     try {
@@ -37,9 +43,6 @@ export const StakeModal = ({
       }
     }
   };
-
-  const maxAmount = balance;
-  const persentage = 10;
 
   const handleCloseModal = () => {
     setStakeModal(!isStakeModal);
@@ -122,7 +125,7 @@ export const StakeModal = ({
             <Button color="dark" onClick={handleCloseModal}>
               Go Back
             </Button>
-            <Button color="mint" onClick={fetchStake}>
+            <Button color="mint" onClick={fetchStake} disabled={isDisabled}>
               Stake
             </Button>
           </div>

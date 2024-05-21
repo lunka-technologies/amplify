@@ -20,7 +20,6 @@ export const specialCharacterRule = Yup.string()
   );
 
 export const registerSchema = Yup.object().shape({
-  name: Yup.string(),
   email: Yup.string().email('Invalid email').required('Email is required'),
   discordUsername: Yup.string().required('Discord username is required'),
   password: Yup.string()
