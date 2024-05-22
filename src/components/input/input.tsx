@@ -35,16 +35,17 @@ export const Input = ({
 }: IInputProps) => {
   const [isShowPassword, setShowPassword] = useState(false);
   const isTypePassword = type === 'password';
+  const maxDigits = maxValue.split('.')[0].length;
 
   const currencyMask = createNumberMask({
     prefix: '',
     suffix: '',
     includeThousandsSeparator: true,
-    thousandsSeparatorSymbol: ',',
+    thousandsSeparatorSymbol: '',
     allowDecimal: true,
-    decimalSymbol: '.',
-    decimalLimit: 2,
-    integerLimit: 7,
+    decimalSymbol: '',
+    decimalLimit: 0,
+    integerLimit: maxDigits,
     allowNegative: false,
     allowLeadingZeroes: false,
   });
@@ -62,10 +63,10 @@ export const Input = ({
           placeholder={placeholder}
           onBlur={onBlur}
           pipe={(value) => {
-            let cleanValue = value.replace(/\,/g, '');
-            let numericValue = parseFloat(cleanValue);
-            if (numericValue > parseFloat(maxValue)) {
-              return `${maxValue}`;
+            let cleanValue = parseInt(value);
+
+            if (cleanValue > parseFloat(maxValue)) {
+              return maxValue;
             } else {
               return value;
             }
