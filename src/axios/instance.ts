@@ -1,3 +1,4 @@
+import { LOCAL_JWT_KEY } from '../constants/localHostConstants';
 import { router } from '../router/router';
 import { ROUTE_MAIN } from '../router/routes';
 import axios, { AxiosError } from 'axios';
@@ -5,14 +6,18 @@ import axios, { AxiosError } from 'axios';
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
-  headers: {
-    Authorization: `Bearer ${localStorage}`,
-  },
-  //   withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use((request) => {
-  const jwtToken = localStorage.getItem('jwt-token');
+  const jwtToken = localStorage.getItem(LOCAL_JWT_KEY);
+
+  if (jwtToken) request.headers['Authorization'] = `Bearer ${jwtToken}`;
+
+  return request;
+});
+
+axiosInstance.interceptors.request.use((request) => {
+  const jwtToken = localStorage.getItem(LOCAL_JWT_KEY);
 
   if (jwtToken) request.headers.set('Authorization', `Bearer ${jwtToken}`);
 
@@ -25,8 +30,9 @@ axiosInstance.interceptors.response.use(
   },
   function (error) {
     if (error instanceof AxiosError) {
+      const errorsStatus = error.response?.status === 401;
       // Unauthorized
-      if (error.response?.status === 401) {
+      if (errorsStatus) {
         router.navigate(ROUTE_MAIN);
       }
     }

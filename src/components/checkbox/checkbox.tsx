@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react';
 
 interface ICheckboxProps {
   checked?: boolean;
-  onChange?: (value: boolean) => null;
+  onChange: (checked: boolean) => void;
   label?: string;
 }
 

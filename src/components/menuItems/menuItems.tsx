@@ -1,6 +1,10 @@
 import HelpSVG from '../../assets/help-circle.svg?react';
 import LogoutSVG from '../../assets/logout.svg?react';
 import SettingSVG from '../../assets/setting.svg?react';
+import {
+  LOCAL_JWT_KEY,
+  LOCAL_REMEMBER_ME_KEY,
+} from '../../constants/localHostConstants';
 import { ChangePasswordForm } from '../../forms/changePassword/changePasswordForm';
 import { ROUTE_MAIN } from '../../router/routes';
 import styles from './menuItems.module.scss';
@@ -11,7 +15,8 @@ export const MenuItems = () => {
   const [isShowChangePassword, setShowChangePassword] = useState(false);
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem('jwt-token');
+    localStorage.removeItem(LOCAL_JWT_KEY);
+    localStorage.removeItem(LOCAL_REMEMBER_ME_KEY);
     navigate(ROUTE_MAIN);
   };
 

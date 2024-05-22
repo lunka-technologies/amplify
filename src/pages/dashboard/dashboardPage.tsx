@@ -37,7 +37,6 @@ export const DashboardPage = () => {
       } = await axiosInstance.get(apis.getBalance, {});
 
       setAmount(USDTBalance);
-      // await axiosInstance.get(apis.info, {});
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);
@@ -51,7 +50,7 @@ export const DashboardPage = () => {
 
   return (
     <div className={styles.container}>
-      <Header wallet={walletData} amount={amount} />
+      <Header wallet={walletData} amount={amount} setAmount={setAmount} />
 
       <div className={styles.boxContainer}>
         <div className={styles.chart}>

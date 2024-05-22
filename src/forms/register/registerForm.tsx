@@ -2,6 +2,7 @@ import { apis } from '../../axios/apis';
 import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
+import { LOCAL_JWT_KEY } from '../../constants/localHostConstants';
 import { ROUTE_DASHBOARD, ROUTE_MAIN } from '../../router/routes';
 import { RegisterSchema, registerSchema } from '../../schemas/registerSchema';
 import styles from './registerForm.module.scss';
@@ -29,7 +30,7 @@ export const RegisterForm = () => {
         password: values.password,
       });
 
-      localStorage.setItem('jwt-token', devOnlyToken);
+      localStorage.setItem(LOCAL_JWT_KEY, devOnlyToken);
 
       await axiosInstance.post(apis.createWallet, {});
 
