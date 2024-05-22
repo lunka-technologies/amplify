@@ -3,15 +3,37 @@ import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Checkbox } from '../../components/checkbox/checkbox';
 import { Input } from '../../components/input/input';
-import { ROUTE_DASHBOARD, ROUTE_REGISTER } from '../../router/routes';
+import {
+  LOCAL_JWT_KEY,
+  LOCAL_REMEMBER_ME_KEY,
+} from '../../constants/localHostConstants';
+import {
+  ROUTE_DASHBOARD,
+  ROUTE_MAIN,
+  ROUTE_REGISTER,
+} from '../../router/routes';
 import { LoginSchema, loginSchema } from '../../schemas/loginSchema';
 import styles from './loginForm.module.scss';
 import { AxiosError } from 'axios';
 import { useFormik } from 'formik';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export const LoginForm = () => {
+  const [error, setError] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+
+  console.log(rememberMe);
+
+  useEffect(() => {
+    const jwtToken = localStorage.getItem(LOCAL_JWT_KEY);
+    if (jwtToken) {
+      axiosInstance.defaults.headers.common['Authorization'] =
+        `Bearer ${jwtToken}`;
+    }
+    navigate(ROUTE_MAIN);
+  }, []);
 
   const onSubmit = async (values: LoginSchema) => {
     try {
@@ -22,12 +44,19 @@ export const LoginForm = () => {
         password: values.password,
       });
 
-      localStorage.setItem('jwt-token', devOnlyToken);
+      localStorage.setItem(LOCAL_JWT_KEY, devOnlyToken);
+
+      if (rememberMe) {
+        localStorage.setItem(LOCAL_REMEMBER_ME_KEY, 'true');
+      } else {
+        localStorage.removeItem(LOCAL_REMEMBER_ME_KEY);
+      }
 
       navigate(ROUTE_DASHBOARD);
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);
+        setError(error.response?.data.message as string);
       }
     }
   };
@@ -66,8 +95,13 @@ export const LoginForm = () => {
           formik.errors.password
         }
       />
+      {error && <div className={styles.errorMsg}>{error}</div>}
       <div className={styles.passwordContainer}>
-        <Checkbox label="Remember Me" />
+        <Checkbox
+          label="Remember Me"
+          checked={rememberMe}
+          onChange={(checked) => setRememberMe(checked)}
+        />
         <Link className={styles.forgotPassword} to="#">
           Forgot Password
         </Link>
