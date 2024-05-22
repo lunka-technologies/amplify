@@ -13,6 +13,7 @@ import { Dispatch, SetStateAction, SyntheticEvent, useState } from 'react';
 
 interface IWalletProps {
   amount: number;
+  setAmount: Dispatch<SetStateAction<number>>;
   wallet: string;
   isWalletOpen: boolean;
   setWalletOpen: Dispatch<SetStateAction<boolean>>;
@@ -20,6 +21,7 @@ interface IWalletProps {
 
 export const Wallet = ({
   amount,
+  setAmount,
   wallet,
   isWalletOpen,
   setWalletOpen,
@@ -34,8 +36,11 @@ export const Wallet = ({
         amount,
       });
 
-      await axiosInstance.get(apis.getBalance);
-      // window.location.reload();
+      const {
+        data: { USDTBalance },
+      } = await axiosInstance.get(apis.getBalance);
+
+      setAmount(USDTBalance);
       setIsSuccessful(true);
     } catch (error) {
       if (error instanceof AxiosError) {

@@ -6,14 +6,15 @@ import { Chip } from '../chip/chip';
 import { Profile } from '../profile/profile';
 import { Wallet } from '../wallet/wallet';
 import styles from './header.module.scss';
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
 interface IHeaderProps {
   amount: number;
   wallet: string;
+  setAmount: Dispatch<SetStateAction<number>>;
 }
 
-export const Header = ({ amount, wallet }: IHeaderProps) => {
+export const Header = ({ amount, setAmount, wallet }: IHeaderProps) => {
   const [isShowProfile, setShowProfile] = useState(false);
   const [isWalletOpen, setWalletOpen] = useState(false);
 
@@ -77,6 +78,7 @@ export const Header = ({ amount, wallet }: IHeaderProps) => {
             {isWalletOpen && (
               <Wallet
                 amount={amount}
+                setAmount={setAmount}
                 wallet={wallet}
                 isWalletOpen={isWalletOpen}
                 setWalletOpen={setWalletOpen}
