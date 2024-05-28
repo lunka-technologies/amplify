@@ -1,7 +1,7 @@
 import CloseSVG from '../../assets/close-icon.svg?react';
 import StakeSVG from '../../assets/icon-stake.svg?react';
 import { apis } from '../../axios/apis';
-import { axiosInstance } from '../../axios/instance';
+import { devAxiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
 import { Loader } from '../../components/loader/loader';
@@ -16,6 +16,7 @@ interface IStakeModalProps {
   setStakeModal: Dispatch<SetStateAction<boolean>>;
   balance: number;
   stakeRef: RefObject<HTMLDivElement>;
+  pools: string;
 }
 
 export const StakeModal = ({
@@ -23,14 +24,16 @@ export const StakeModal = ({
   isStakeModal,
   setStakeModal,
   stakeRef,
+  pools,
 }: IStakeModalProps) => {
   const inputRef = useRef<MaskedInput>(null);
   const [inputValue, setInputValue] = useState('0.0');
   const [isSuccessful, setSuccessful] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
   const maxAmount = balance.toString();
-  const persentage = 10;
+
   const isDisabled =
     parseFloat(inputValue) === 0 ||
     inputValue === '' ||
@@ -39,7 +42,7 @@ export const StakeModal = ({
   const fetchStake = async () => {
     setLoading(true);
     try {
-      await axiosInstance.post(apis.stake, {
+      await devAxiosInstance.post(apis.stake, {
         amount: Number(inputValue),
       });
       setSuccessful(true);
@@ -63,9 +66,11 @@ export const StakeModal = ({
   const handleMaxAmount = () => {
     if (inputRef.current) {
       const maxAmountNumber = parseFloat(maxAmount);
-      const roundedMaxAmount = Math.floor(maxAmountNumber);
+      const roundedMaxAmount = Math.floor(maxAmountNumber).toString();
+
       (inputRef.current.inputElement as HTMLInputElement).value =
-        roundedMaxAmount.toString();
+        roundedMaxAmount;
+      setInputValue(roundedMaxAmount);
     }
   };
 
@@ -132,7 +137,7 @@ export const StakeModal = ({
               </div>
             </div>
             <p className={styles.subtitle}>
-              Average APY invested : {'  '} {persentage}%
+              Average APY invested : {'  '} {pools}%
             </p>
           </div>
           {error && <div className={styles.errorMsg}>{error}</div>}

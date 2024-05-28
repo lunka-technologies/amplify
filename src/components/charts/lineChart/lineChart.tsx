@@ -1,7 +1,48 @@
+import { apis } from '../../../axios/apis';
+import { prodAxiosInstance } from '../../../axios/instance';
 import { chartsGridClasses } from '@mui/x-charts/ChartsGrid';
 import { LineChart as Chart } from '@mui/x-charts/LineChart';
+import { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
+
+interface DataPoint {
+  id: number;
+  timestamp: string;
+  apyPercentage: number;
+}
 
 export const LineChart = () => {
+  // const [data, setData] = useState<DataPoint[]>([]);
+  const [xAxisData, setXAxisData] = useState<string[]>([]);
+  const [yAxisData, setYAxisData] = useState<number[]>([]);
+
+  const fetchGraph = async () => {
+    try {
+      const {
+        data: { data },
+      } = await prodAxiosInstance.get(apis.getGraph);
+
+      const xData = data.map((item: DataPoint) =>
+        new Date(item.timestamp).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+        })
+      );
+      const yData = data.map((item: DataPoint) => item.apyPercentage);
+
+      setXAxisData(xData);
+      setYAxisData(yData);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchGraph();
+  }, []);
+
   return (
     <Chart
       sx={{
@@ -36,13 +77,13 @@ export const LineChart = () => {
       xAxis={[
         {
           scaleType: 'point',
-          data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug'],
+          data: xAxisData,
         },
       ]}
       series={[
         {
           id: 'series',
-          data: [2, 5.5, 5, 8.6, 1.5, 5, 3, 1],
+          data: yAxisData,
           area: true,
           showMark: false,
           curve: 'linear',

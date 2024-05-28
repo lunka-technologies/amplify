@@ -5,9 +5,11 @@ export const apis = {
   stake: '/strategy/testnet/stake',
   halt: '/strategy/testnet/halt',
   info: '/strategy/testnet/info',
+  getPools: '/strategy/pools',
   createWallet: '/wallet/create',
   getWallet: '/wallet/get',
   postFund: '/wallet/fund',
   getBalance: '/wallet/balance',
   postWithdraw: '/wallet/withdraw',
+  getGraph: '/graph/get',
 };

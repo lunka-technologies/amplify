@@ -1,7 +1,7 @@
 import CloseSVG from '../../assets/close-icon.svg?react';
 import WithdrawSVG from '../../assets/icon-withdraw.svg?react';
 import { apis } from '../../axios/apis';
-import { axiosInstance } from '../../axios/instance';
+import { devAxiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
 import { Loader } from '../../components/loader/loader';
@@ -16,6 +16,7 @@ interface IWithdrawModalProps {
   isWithdrawModal: boolean;
   setWithdrawModal: Dispatch<SetStateAction<boolean>>;
   withdrawRef: RefObject<HTMLDivElement>;
+  pools: string;
 }
 
 export const WithdrawModal = ({
@@ -23,6 +24,7 @@ export const WithdrawModal = ({
   isWithdrawModal,
   setWithdrawModal,
   withdrawRef,
+  pools,
 }: IWithdrawModalProps) => {
   const inputRef = useRef<MaskedInput>(null);
 
@@ -32,7 +34,6 @@ export const WithdrawModal = ({
   const [isSuccessful, setSuccessful] = useState(false);
 
   const maxAmount = balance;
-  const persentage = 0;
 
   const isDisabled =
     parseFloat(inputValue) === 0 ||
@@ -42,7 +43,7 @@ export const WithdrawModal = ({
   const fetchWithdraw = async () => {
     setLoading(true);
     try {
-      await axiosInstance.post(apis.halt, {
+      await devAxiosInstance.post(apis.halt, {
         amount: Number(inputValue),
       });
       setSuccessful(true);
@@ -65,9 +66,11 @@ export const WithdrawModal = ({
   const handleMaxAmount = () => {
     if (inputRef.current) {
       const maxAmountNumber = parseFloat(maxAmount);
-      const roundedMaxAmount = Math.floor(maxAmountNumber);
+      const roundedMaxAmount = Math.floor(maxAmountNumber).toString();
+
       (inputRef.current.inputElement as HTMLInputElement).value =
-        roundedMaxAmount.toString();
+        roundedMaxAmount;
+      setInputValue(roundedMaxAmount);
     }
   };
 
@@ -136,7 +139,7 @@ export const WithdrawModal = ({
               </div>
             </div>
             <p className={styles.subtitle}>
-              Average APY invested : {'  '} {persentage}%
+              Average APY invested : {'  '} {pools}%
             </p>
           </div>
           {error && <div className={styles.errorMsg}>{error}</div>}

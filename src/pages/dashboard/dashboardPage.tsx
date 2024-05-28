@@ -1,9 +1,9 @@
 import { apis } from '../../axios/apis';
-import { axiosInstance } from '../../axios/instance';
+import { devAxiosInstance } from '../../axios/instance';
 import { LineChart } from '../../components/charts/lineChart/lineChart';
-import { Dropdown } from '../../components/dropdown/dropdown';
+// import { Dropdown } from '../../components/dropdown/dropdown';
 import { Header } from '../../components/header/header';
-import { Switch } from '../../components/switch/switch';
+// import { Switch } from '../../components/switch/switch';
 import { Table } from '../../components/table/table';
 import styles from './dashboardPage.module.scss';
 import { AxiosError } from 'axios';
@@ -17,13 +17,13 @@ export const DashboardPage = () => {
     try {
       const {
         data: { address },
-      } = await axiosInstance.get(apis.getWallet);
+      } = await devAxiosInstance.get(apis.getWallet);
 
       if (!address) {
-        await axiosInstance.post(apis.createWallet, {});
-        await axiosInstance.post(apis.postFund, {});
+        await devAxiosInstance.post(apis.createWallet, {});
+        await devAxiosInstance.post(apis.postFund, {});
 
-        const createWalletResponse = await axiosInstance.get(apis.getWallet);
+        const createWalletResponse = await devAxiosInstance.get(apis.getWallet);
         const newAddress = createWalletResponse.data.address;
 
         setWalletData(newAddress);
@@ -33,7 +33,7 @@ export const DashboardPage = () => {
 
       const {
         data: { USDTBalance },
-      } = await axiosInstance.get(apis.getBalance, {});
+      } = await devAxiosInstance.get(apis.getBalance, {});
 
       setAmount(USDTBalance);
     } catch (error) {
@@ -62,13 +62,13 @@ export const DashboardPage = () => {
 
       <div className={styles.boxContainer}>
         <div className={styles.table}>
-          <div className={styles.filters}>
+          {/* <div className={styles.filters}>
             <Switch label="Staked only" />
             <div>
               <h3 className={styles.dropdownTitle}>Sort By</h3>
               <Dropdown />
             </div>
-          </div>
+          </div> */}
           <Table balance={amount} />
         </div>
       </div>

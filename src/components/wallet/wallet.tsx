@@ -3,7 +3,7 @@ import CopySVG from '../../assets/copy-icon.svg?react';
 import WithdrawSVG from '../../assets/f-check.svg?react';
 import KeySVG from '../../assets/key-icon.svg?react';
 import { apis } from '../../axios/apis';
-import { axiosInstance } from '../../axios/instance';
+import { devAxiosInstance } from '../../axios/instance';
 import { Button } from '../button/button';
 import { Card } from '../card/card';
 import { Input } from '../input/input';
@@ -35,14 +35,14 @@ export const Wallet = ({
   const fetchWallet = async (address: string) => {
     setLoading(true);
     try {
-      await axiosInstance.post(apis.postWithdraw, {
+      await devAxiosInstance.post(apis.postWithdraw, {
         address,
         amount,
       });
 
       const {
         data: { USDTBalance },
-      } = await axiosInstance.get(apis.getBalance);
+      } = await devAxiosInstance.get(apis.getBalance);
 
       setAmount(USDTBalance);
       setIsSuccessful(true);

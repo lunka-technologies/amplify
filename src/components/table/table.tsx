@@ -1,5 +1,5 @@
 import { apis } from '../../axios/apis';
-import { axiosInstance } from '../../axios/instance';
+import { devAxiosInstance, prodAxiosInstance } from '../../axios/instance';
 import { getCoinSVG } from '../../helpers/coinIcon';
 import { StakeModal } from '../../modals/stakeModal/stakeModal';
 import { WithdrawModal } from '../../modals/withdrawModal/withdrawModal';
@@ -31,12 +31,14 @@ const TableHead = () => {
 export const Table = ({ balance }: ITableProps) => {
   const [isStakeModal, setStakeModal] = useState(false);
   const [isWithdrawModal, setWithdrawModal] = useState(false);
-  const walletAmount = balance;
+  const [pools, setPools] = useState('');
   const [stakedAmount, setStakedAmount] = useState<number>(0);
-  const amount = stakedAmount.toFixed(2);
 
   const stakeRef = useRef<HTMLDivElement>(null);
   const withdrawRef = useRef<HTMLDivElement>(null);
+
+  const walletAmount = balance;
+  const amount = stakedAmount.toFixed(2);
 
   useEffect(() => {
     document.addEventListener('click', checkIfClickedOutside, false);
@@ -70,9 +72,12 @@ export const Table = ({ balance }: ITableProps) => {
 
   const fetchStackInfo = async () => {
     try {
+      const { data } = await prodAxiosInstance.get(apis.getPools, {});
+      const apyData = data.data[0].totalApy;
+      setPools(apyData.toFixed(2));
       const {
         data: { userStakingInfo },
-      } = await axiosInstance.get(apis.info, {});
+      } = await devAxiosInstance.get(apis.info, {});
 
       const sum = calculateStakedAmount(userStakingInfo);
       setStakedAmount(sum);
@@ -118,7 +123,7 @@ export const Table = ({ balance }: ITableProps) => {
         {item.assets.map((asset) => getCoinSVG(asset))}
       </td>
       <td>
-        <span className={styles.span}>{item.apy}%</span>
+        <span className={styles.span}>{pools}%</span>
       </td>
       <td>
         <span className={styles.span}>
@@ -168,6 +173,7 @@ export const Table = ({ balance }: ITableProps) => {
           isStakeModal={isStakeModal}
           setStakeModal={setStakeModal}
           balance={walletAmount}
+          pools={pools}
         />
       )}
       {isWithdrawModal && (
@@ -176,6 +182,7 @@ export const Table = ({ balance }: ITableProps) => {
           balance={amount}
           isWithdrawModal={isWithdrawModal}
           setWithdrawModal={setWithdrawModal}
+          pools={pools}
         />
       )}
     </div>
