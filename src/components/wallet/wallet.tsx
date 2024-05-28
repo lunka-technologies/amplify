@@ -7,6 +7,7 @@ import { axiosInstance } from '../../axios/instance';
 import { Button } from '../button/button';
 import { Card } from '../card/card';
 import { Input } from '../input/input';
+import { Loader } from '../loader/loader';
 import styles from './wallet.module.scss';
 import { AxiosError } from 'axios';
 import { Dispatch, SetStateAction, SyntheticEvent, useState } from 'react';
@@ -28,8 +29,11 @@ export const Wallet = ({
 }: IWalletProps) => {
   const [withdrawData, setWithdrawData] = useState('');
   const [isSuccessful, setIsSuccessful] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const fetchWallet = async (address: string) => {
+    setLoading(true);
     try {
       await axiosInstance.post(apis.postWithdraw, {
         address,
@@ -45,7 +49,10 @@ export const Wallet = ({
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);
+        setError(error.response?.data.message as string);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -150,6 +157,7 @@ export const Wallet = ({
               }
             />
           </div>
+          {error && <div className={styles.errorMsg}>{error}</div>}
           <div className={styles.buttonsGroup}>
             <Button
               color="dark"
@@ -162,9 +170,18 @@ export const Wallet = ({
               color="mint"
               className={styles.button}
               onClick={() => handleWithdraw(withdrawData)}
+              disabled={loading}
             >
-              <WithdrawSVG />
-              Withdraw
+              {loading ? (
+                <div>
+                  <Loader /> Loading...
+                </div>
+              ) : (
+                <>
+                  <WithdrawSVG />
+                  Withdraw
+                </>
+              )}
             </Button>
           </div>
         </>

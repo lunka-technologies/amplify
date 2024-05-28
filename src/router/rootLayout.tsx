@@ -4,13 +4,10 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 export const RootLayout = () => {
   const isAuthenticated = localStorage.getItem(LOCAL_JWT_KEY);
+
   return (
     <>
-      {!isAuthenticated ? (
-        <Outlet />
-      ) : (
-        <Navigate to={ROUTE_DASHBOARD} replace />
-      )}
+      {isAuthenticated ? <Navigate to={ROUTE_DASHBOARD} replace /> : <Outlet />}
     </>
   );
 };

@@ -2,7 +2,7 @@ import EyeClosedSVG from '../../assets/eye-closed.svg?react';
 import EyeOpenSVG from '../../assets/eye-open.svg?react';
 import styles from './input.module.scss';
 import classNames from 'classnames';
-import { LegacyRef, SyntheticEvent, useState } from 'react';
+import { LegacyRef, MouseEvent, SyntheticEvent, useState } from 'react';
 import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
@@ -100,7 +100,10 @@ export const Input = ({
       {error && <div className={styles.errorMsg}>{error}</div>}
       {isTypePassword && (
         <div
-          onClick={() => setShowPassword(!isShowPassword)}
+          onClick={(e: MouseEvent<HTMLDivElement>) => {
+            e.stopPropagation();
+            setShowPassword(!isShowPassword);
+          }}
           className={styles.eye}
         >
           {isShowPassword ? <EyeClosedSVG /> : <EyeOpenSVG />}

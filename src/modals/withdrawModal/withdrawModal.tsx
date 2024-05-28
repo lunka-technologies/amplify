@@ -4,28 +4,34 @@ import { apis } from '../../axios/apis';
 import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
+import { Loader } from '../../components/loader/loader';
 import { Modal } from '../../components/modal/modal';
 import styles from './withdrawModal.module.scss';
 import { AxiosError } from 'axios';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, RefObject, SetStateAction, useRef, useState } from 'react';
 import MaskedInput from 'react-text-mask';
 
 interface IWithdrawModalProps {
+  balance: string;
   isWithdrawModal: boolean;
   setWithdrawModal: Dispatch<SetStateAction<boolean>>;
+  withdrawRef: RefObject<HTMLDivElement>;
 }
 
 export const WithdrawModal = ({
+  balance,
   isWithdrawModal,
   setWithdrawModal,
+  withdrawRef,
 }: IWithdrawModalProps) => {
   const inputRef = useRef<MaskedInput>(null);
 
   const [inputValue, setInputValue] = useState('0.0');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [isSuccessful, setSuccessful] = useState(false);
-  const [info, setInfo] = useState('0.0');
 
-  const maxAmount = info;
+  const maxAmount = balance;
   const persentage = 0;
 
   const isDisabled =
@@ -33,25 +39,8 @@ export const WithdrawModal = ({
     inputValue === '' ||
     parseFloat(maxAmount) === 0;
 
-  const fetchInfo = async () => {
-    try {
-      const {
-        data: { userStakingInfo },
-      } = await axiosInstance.get(apis.info, {});
-
-      if (userStakingInfo[0] !== undefined) setInfo(userStakingInfo[0]);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(error);
-      }
-    }
-  };
-
-  useEffect(() => {
-    fetchInfo();
-  }, []);
-
   const fetchWithdraw = async () => {
+    setLoading(true);
     try {
       await axiosInstance.post(apis.halt, {
         amount: Number(inputValue),
@@ -59,19 +48,26 @@ export const WithdrawModal = ({
       setSuccessful(true);
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error);
+        setError(error.response?.data.message as string);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleCloseModal = () => {
     setWithdrawModal(!isWithdrawModal);
+    if (isSuccessful) {
+      window.location.reload();
+    }
   };
 
   const handleMaxAmount = () => {
     if (inputRef.current) {
+      const maxAmountNumber = parseFloat(maxAmount);
+      const roundedMaxAmount = Math.floor(maxAmountNumber);
       (inputRef.current.inputElement as HTMLInputElement).value =
-        maxAmount.toString();
+        roundedMaxAmount.toString();
     }
   };
 
@@ -80,7 +76,7 @@ export const WithdrawModal = ({
   };
 
   return (
-    <Modal>
+    <Modal ref={withdrawRef} onClick={handleCloseModal}>
       {isSuccessful ? (
         <div className={styles.container}>
           <div className={styles.header}>
@@ -143,12 +139,24 @@ export const WithdrawModal = ({
               Average APY invested : {'  '} {persentage}%
             </p>
           </div>
+          {error && <div className={styles.errorMsg}>{error}</div>}
           <div className={styles.actions}>
             <Button color="dark" onClick={handleCloseModal}>
               Go Back
             </Button>
-            <Button color="mint" onClick={fetchWithdraw} disabled={isDisabled}>
-              Withdraw
+            <Button
+              className={styles.button}
+              color="mint"
+              onClick={fetchWithdraw}
+              disabled={isDisabled || loading}
+            >
+              {loading ? (
+                <div>
+                  <Loader /> Loading...
+                </div>
+              ) : (
+                'Withdraw'
+              )}
             </Button>
           </div>
         </div>

@@ -22,29 +22,23 @@ export const Header = ({ amount, setAmount, wallet }: IHeaderProps) => {
   const walletRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // document.addEventListener('click', checkIfClickedOutside, false);
-    // return () => {
-    //   document.removeEventListener('click', checkIfClickedOutside, false);
-    // };
+    document.addEventListener('click', checkIfClickedOutside, false);
+    return () => {
+      document.removeEventListener('click', checkIfClickedOutside, false);
+    };
   }, []);
 
-  // const checkIfClickedOutside = (e: MouseEvent) => {
-  //   if (!profileRef.current) return;
+  const checkIfClickedOutside = (e: MouseEvent) => {
+    if (!profileRef.current) return;
 
-  //   console.log(
-  //     profileRef.current,
-  //     profileRef.current.contains(e.target as Node),
-  //     e.target
-  //   );
+    if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+      setShowProfile(false);
+    }
 
-  //   if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
-  //     setShowProfile(false);
-  //   }
-
-  //   if (walletRef.current && !walletRef.current.contains(e.target as Node)) {
-  //     setWalletOpen(false);
-  //   }
-  // };
+    if (walletRef.current && !walletRef.current.contains(e.target as Node)) {
+      setWalletOpen(false);
+    }
+  };
 
   const handleClickWallet = () => {
     setWalletOpen(!isWalletOpen);

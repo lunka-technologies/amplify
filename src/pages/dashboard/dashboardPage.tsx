@@ -22,7 +22,6 @@ export const DashboardPage = () => {
       if (!address) {
         await axiosInstance.post(apis.createWallet, {});
         await axiosInstance.post(apis.postFund, {});
-        console.log();
 
         const createWalletResponse = await axiosInstance.get(apis.getWallet);
         const newAddress = createWalletResponse.data.address;
@@ -70,7 +69,7 @@ export const DashboardPage = () => {
               <Dropdown />
             </div>
           </div>
-          <Table amount={amount} />
+          <Table balance={amount} />
         </div>
       </div>
     </div>

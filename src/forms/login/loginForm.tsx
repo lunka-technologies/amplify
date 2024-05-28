@@ -1,12 +1,8 @@
 import { apis } from '../../axios/apis';
 import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
-import { Checkbox } from '../../components/checkbox/checkbox';
 import { Input } from '../../components/input/input';
-import {
-  LOCAL_JWT_KEY,
-  LOCAL_REMEMBER_ME_KEY,
-} from '../../constants/localHostConstants';
+import { LOCAL_JWT_KEY } from '../../constants/localHostConstants';
 import {
   ROUTE_DASHBOARD,
   ROUTE_MAIN,
@@ -21,10 +17,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export const LoginForm = () => {
   const [error, setError] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
-
-  console.log(rememberMe);
 
   useEffect(() => {
     const jwtToken = localStorage.getItem(LOCAL_JWT_KEY);
@@ -45,12 +38,6 @@ export const LoginForm = () => {
       });
 
       localStorage.setItem(LOCAL_JWT_KEY, devOnlyToken);
-
-      if (rememberMe) {
-        localStorage.setItem(LOCAL_REMEMBER_ME_KEY, 'true');
-      } else {
-        localStorage.removeItem(LOCAL_REMEMBER_ME_KEY);
-      }
 
       navigate(ROUTE_DASHBOARD);
     } catch (error) {
@@ -97,11 +84,6 @@ export const LoginForm = () => {
       />
       {error && <div className={styles.errorMsg}>{error}</div>}
       <div className={styles.passwordContainer}>
-        <Checkbox
-          label="Remember Me"
-          checked={rememberMe}
-          onChange={(checked) => setRememberMe(checked)}
-        />
         <Link className={styles.forgotPassword} to="#">
           Forgot Password
         </Link>

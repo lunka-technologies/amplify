@@ -30,9 +30,12 @@ axiosInstance.interceptors.response.use(
   },
   function (error) {
     if (error instanceof AxiosError) {
-      const errorsStatus = error.response?.status === 401;
+      const errorsStatus =
+        error.response?.status === 401 || error.response?.status === 403;
       // Unauthorized
       if (errorsStatus) {
+        localStorage.removeItem(LOCAL_JWT_KEY);
+
         router.navigate(ROUTE_MAIN);
       }
     }

@@ -4,27 +4,32 @@ import { apis } from '../../axios/apis';
 import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
+import { Loader } from '../../components/loader/loader';
 import { Modal } from '../../components/modal/modal';
 import styles from './stakeModal.module.scss';
 import { AxiosError } from 'axios';
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, RefObject, SetStateAction, useRef, useState } from 'react';
 import MaskedInput from 'react-text-mask';
 
 interface IStakeModalProps {
   isStakeModal: boolean;
   setStakeModal: Dispatch<SetStateAction<boolean>>;
-  balance: string;
+  balance: number;
+  stakeRef: RefObject<HTMLDivElement>;
 }
 
 export const StakeModal = ({
   balance,
   isStakeModal,
   setStakeModal,
+  stakeRef,
 }: IStakeModalProps) => {
   const inputRef = useRef<MaskedInput>(null);
   const [inputValue, setInputValue] = useState('0.0');
   const [isSuccessful, setSuccessful] = useState(false);
-  const maxAmount = balance;
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const maxAmount = balance.toString();
   const persentage = 10;
   const isDisabled =
     parseFloat(inputValue) === 0 ||
@@ -32,6 +37,7 @@ export const StakeModal = ({
     parseFloat(maxAmount) === 0;
 
   const fetchStake = async () => {
+    setLoading(true);
     try {
       await axiosInstance.post(apis.stake, {
         amount: Number(inputValue),
@@ -40,18 +46,26 @@ export const StakeModal = ({
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);
+        setError(error.response?.data.message as string);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleCloseModal = () => {
     setStakeModal(!isStakeModal);
+    if (isSuccessful) {
+      window.location.reload();
+    }
   };
 
   const handleMaxAmount = () => {
     if (inputRef.current) {
+      const maxAmountNumber = parseFloat(maxAmount);
+      const roundedMaxAmount = Math.floor(maxAmountNumber);
       (inputRef.current.inputElement as HTMLInputElement).value =
-        maxAmount.toString();
+        roundedMaxAmount.toString();
     }
   };
 
@@ -60,7 +74,7 @@ export const StakeModal = ({
   };
 
   return (
-    <Modal>
+    <Modal ref={stakeRef} onClick={handleCloseModal}>
       {isSuccessful ? (
         <div className={styles.container}>
           <div className={styles.header}>
@@ -121,12 +135,24 @@ export const StakeModal = ({
               Average APY invested : {'  '} {persentage}%
             </p>
           </div>
+          {error && <div className={styles.errorMsg}>{error}</div>}
           <div className={styles.actions}>
             <Button color="dark" onClick={handleCloseModal}>
               Go Back
             </Button>
-            <Button color="mint" onClick={fetchStake} disabled={isDisabled}>
-              Stake
+            <Button
+              className={styles.button}
+              color="mint"
+              onClick={fetchStake}
+              disabled={isDisabled || loading}
+            >
+              {loading ? (
+                <div>
+                  <Loader /> Loading...
+                </div>
+              ) : (
+                'Stake'
+              )}
             </Button>
           </div>
         </div>

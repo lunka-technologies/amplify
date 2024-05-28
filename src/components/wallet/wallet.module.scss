@@ -82,6 +82,12 @@
   font-weight: 700;
   font-size: 16px;
   color: #fff;
+  & div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
 }
 
 .success {
@@ -108,4 +114,13 @@
     font-size: 14px;
     color: #fff;
   }
+}
+
+.errorMsg {
+  display: flex;
+  justify-content: flex-end;
+  color: #d32f2f;
+  font-size: 14px;
+  margin-block: 4px;
+  margin-right: 4px;
 }

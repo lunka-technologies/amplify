@@ -23,6 +23,7 @@
 
       &:disabled {
         background-color: #3d3b46;
+        cursor: not-allowed;
 
         &:active {
           opacity: 1;
