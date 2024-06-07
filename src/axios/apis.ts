@@ -4,7 +4,7 @@ export const apis = {
   getUser: '/auth/user',
   stake: '/strategy/testnet/stake',
   halt: '/strategy/testnet/halt',
-  info: '/strategy/testnet/info',
+  info: '/strategy/getStakingInfo',
   getPools: '/strategy/pools',
   createWallet: '/wallet/create',
   getWallet: '/wallet/get',

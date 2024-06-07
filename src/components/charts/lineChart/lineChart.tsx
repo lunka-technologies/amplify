@@ -1,5 +1,5 @@
 import { apis } from '../../../axios/apis';
-import { prodAxiosInstance } from '../../../axios/instance';
+import { axiosInstance } from '../../../axios/instance';
 import { chartsGridClasses } from '@mui/x-charts/ChartsGrid';
 import { LineChart as Chart } from '@mui/x-charts/LineChart';
 import { AxiosError } from 'axios';
@@ -20,7 +20,7 @@ export const LineChart = () => {
     try {
       const {
         data: { data },
-      } = await prodAxiosInstance.get(apis.getGraph);
+      } = await axiosInstance.get(apis.getGraph);
 
       const xData = data.map((item: DataPoint) =>
         new Date(item.timestamp).toLocaleDateString('en-US', {

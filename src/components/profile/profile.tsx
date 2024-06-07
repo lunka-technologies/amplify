@@ -1,5 +1,5 @@
 import { apis } from '../../axios/apis';
-import { devAxiosInstance } from '../../axios/instance';
+import { axiosInstance } from '../../axios/instance';
 import { Card } from '../card/card';
 import { MenuItems } from '../menuItems/menuItems';
 import styles from './profile.module.scss';
@@ -23,7 +23,7 @@ export const Profile = () => {
   const fetchUser = async () => {
     const {
       data: { payload },
-    } = await devAxiosInstance.get(apis.getUser, {});
+    } = await axiosInstance.get(apis.getUser, {});
     setUserData(payload);
   };
 

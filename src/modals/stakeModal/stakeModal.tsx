@@ -1,7 +1,7 @@
 import CloseSVG from '../../assets/close-icon.svg?react';
 import StakeSVG from '../../assets/icon-stake.svg?react';
 import { apis } from '../../axios/apis';
-import { devAxiosInstance } from '../../axios/instance';
+import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
 import { Loader } from '../../components/loader/loader';
@@ -42,7 +42,7 @@ export const StakeModal = ({
   const fetchStake = async () => {
     setLoading(true);
     try {
-      await devAxiosInstance.post(apis.stake, {
+      await axiosInstance.post(apis.stake, {
         amount: Number(inputValue),
       });
       setSuccessful(true);

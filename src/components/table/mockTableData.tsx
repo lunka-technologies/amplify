@@ -17,7 +17,7 @@ export const mockData: MockData[] = [
     strategy: 'growth',
     protocol: Coins.AAVE,
     chain: Coins.E_ETH,
-    assets: [Coins.AAVE, Coins.USDTF, Coins.USDC],
+    assets: [Coins.AAVE, Coins.USDT, Coins.USDC],
     apy: 32.4,
     stake: 120.5,
   },

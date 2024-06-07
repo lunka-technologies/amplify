@@ -1,5 +1,5 @@
 import { apis } from '../../axios/apis';
-import { devAxiosInstance } from '../../axios/instance';
+import { axiosInstance } from '../../axios/instance';
 import { LineChart } from '../../components/charts/lineChart/lineChart';
 // import { Dropdown } from '../../components/dropdown/dropdown';
 import { Header } from '../../components/header/header';
@@ -17,13 +17,13 @@ export const DashboardPage = () => {
     try {
       const {
         data: { address },
-      } = await devAxiosInstance.get(apis.getWallet);
+      } = await axiosInstance.get(apis.getWallet);
 
       if (!address) {
-        await devAxiosInstance.post(apis.createWallet, {});
-        await devAxiosInstance.post(apis.postFund, {});
+        await axiosInstance.post(apis.createWallet, {});
+        await axiosInstance.post(apis.postFund, {});
 
-        const createWalletResponse = await devAxiosInstance.get(apis.getWallet);
+        const createWalletResponse = await axiosInstance.get(apis.getWallet);
         const newAddress = createWalletResponse.data.address;
 
         setWalletData(newAddress);
@@ -32,10 +32,13 @@ export const DashboardPage = () => {
       }
 
       const {
-        data: { USDTBalance },
-      } = await devAxiosInstance.get(apis.getBalance, {});
+        data: {
+          balances: { usdt },
+        },
+      } = await axiosInstance.get(apis.getBalance, {});
+      console.log(usdt);
 
-      setAmount(USDTBalance);
+      setAmount(usdt);
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error);

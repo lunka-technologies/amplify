@@ -1,5 +1,5 @@
 import { apis } from '../../axios/apis';
-import { devAxiosInstance } from '../../axios/instance';
+import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
 import { LOCAL_JWT_KEY } from '../../constants/localHostConstants';
@@ -22,7 +22,7 @@ export const LoginForm = () => {
   useEffect(() => {
     const jwtToken = localStorage.getItem(LOCAL_JWT_KEY);
     if (jwtToken) {
-      devAxiosInstance.defaults.headers.common['Authorization'] =
+      axiosInstance.defaults.headers.common['Authorization'] =
         `Bearer ${jwtToken}`;
     }
     navigate(ROUTE_MAIN);
@@ -32,7 +32,7 @@ export const LoginForm = () => {
     try {
       const {
         data: { devOnlyToken },
-      } = await devAxiosInstance.post(apis.login, {
+      } = await axiosInstance.post(apis.login, {
         email: values.email,
         password: values.password,
       });

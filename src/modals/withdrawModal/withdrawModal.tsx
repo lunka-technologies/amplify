@@ -1,7 +1,7 @@
 import CloseSVG from '../../assets/close-icon.svg?react';
 import WithdrawSVG from '../../assets/icon-withdraw.svg?react';
 import { apis } from '../../axios/apis';
-import { devAxiosInstance } from '../../axios/instance';
+import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
 import { Loader } from '../../components/loader/loader';
@@ -43,7 +43,7 @@ export const WithdrawModal = ({
   const fetchWithdraw = async () => {
     setLoading(true);
     try {
-      await devAxiosInstance.post(apis.halt, {
+      await axiosInstance.post(apis.halt, {
         amount: Number(inputValue),
       });
       setSuccessful(true);

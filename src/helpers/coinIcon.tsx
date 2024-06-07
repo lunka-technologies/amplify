@@ -59,7 +59,7 @@ export const getCoinSVG = (coin: Coins) => {
     case Coins.USDC:
       return <USDC />;
 
-    case Coins.USDTF:
+    case Coins.USDT:
       return <USDT />;
 
     case Coins.UNISWAP:

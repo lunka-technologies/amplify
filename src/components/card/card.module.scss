@@ -1,6 +1,8 @@
+@import '../../scss/variables.scss';
+
 .card {
   width: fit-content;
   padding: 20px 24px;
   border-radius: 8px;
-  background-color: #1e1c33;
+  background-color: $backgroundColor;
 }

@@ -1,5 +1,5 @@
 import { apis } from '../../axios/apis';
-import { devAxiosInstance } from '../../axios/instance';
+import { axiosInstance } from '../../axios/instance';
 import { Button } from '../../components/button/button';
 import { Input } from '../../components/input/input';
 import { LOCAL_JWT_KEY } from '../../constants/localHostConstants';
@@ -17,7 +17,7 @@ export const RegisterForm = () => {
 
   const onSubmit = async (values: RegisterSchema) => {
     try {
-      await devAxiosInstance.post(apis.signup, {
+      await axiosInstance.post(apis.signup, {
         email: values.email,
         username: values.discordUsername,
         password: values.password,
@@ -25,16 +25,16 @@ export const RegisterForm = () => {
 
       const {
         data: { devOnlyToken },
-      } = await devAxiosInstance.post(apis.login, {
+      } = await axiosInstance.post(apis.login, {
         email: values.email,
         password: values.password,
       });
 
       localStorage.setItem(LOCAL_JWT_KEY, devOnlyToken);
 
-      await devAxiosInstance.post(apis.createWallet, {});
+      await axiosInstance.post(apis.createWallet, {});
 
-      await devAxiosInstance.post(apis.postFund, {});
+      await axiosInstance.post(apis.postFund, {});
 
       navigate(ROUTE_DASHBOARD);
     } catch (error) {

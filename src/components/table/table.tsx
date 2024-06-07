@@ -1,5 +1,5 @@
 import { apis } from '../../axios/apis';
-import { devAxiosInstance, prodAxiosInstance } from '../../axios/instance';
+import { axiosInstance } from '../../axios/instance';
 import { getCoinSVG } from '../../helpers/coinIcon';
 import { StakeModal } from '../../modals/stakeModal/stakeModal';
 import { WithdrawModal } from '../../modals/withdrawModal/withdrawModal';
@@ -72,12 +72,12 @@ export const Table = ({ balance }: ITableProps) => {
 
   const fetchStackInfo = async () => {
     try {
-      const { data } = await prodAxiosInstance.get(apis.getPools, {});
+      const { data } = await axiosInstance.get(apis.getPools, {});
       const apyData = data.data[0].totalApy;
       setPools(apyData.toFixed(2));
       const {
         data: { userStakingInfo },
-      } = await devAxiosInstance.get(apis.info, {});
+      } = await axiosInstance.get(apis.info, {});
 
       const sum = calculateStakedAmount(userStakingInfo);
       setStakedAmount(sum);
