@@ -84,9 +84,9 @@ export const LoginForm = () => {
       />
       {error && <div className={styles.errorMsg}>{error}</div>}
       <div className={styles.passwordContainer}>
-        <Link className={styles.forgotPassword} to="#">
+        {/* <Link className={styles.forgotPassword} to="#">
           Forgot Password
-        </Link>
+        </Link> */}
       </div>
       <Button type="submit" color="mint" className={styles.submitButton}>
         Login
